@@ -1,4 +1,4 @@
-import { createClient } from "@liveblocks/client";
+import { createClient, LiveMap } from "@liveblocks/client";
 
 
 
@@ -16,6 +16,8 @@ declare global {
     Storage: {
       // Example, a conflict-free list
       // animals: LiveList<string>;
+
+      canvasObjects: LiveMap<string, any>;
     };
 
     // Custom user info set when authenticating with a secret key
@@ -40,6 +42,8 @@ declare global {
       // x: number;
       // y: number;
     };
+
+    
 
     // Custom room info set with resolveRoomsInfo, for useRoomInfo
     RoomInfo: {
