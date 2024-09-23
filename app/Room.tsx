@@ -9,11 +9,11 @@ import {
 import { LiveMap } from "@liveblocks/client";
 import Loader from "@/components/Loader";
 
-
 export function Room({ children }: { children: ReactNode }) {
   return (
     <LiveblocksProvider
       publicApiKey={process.env.NEXT_PUBLIC_LIVEBLOACK_PUBLIC_KEY!}
+      
     >
       <RoomProvider
         id="my-room"
@@ -22,7 +22,7 @@ export function Room({ children }: { children: ReactNode }) {
           canvasObjects: new LiveMap(),
         }}
       >
-        <ClientSideSuspense fallback={<Loader/>}>
+        <ClientSideSuspense fallback={<Loader />}>
           {children}
         </ClientSideSuspense>
       </RoomProvider>

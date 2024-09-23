@@ -1,7 +1,5 @@
-
 import { v4 as uuid4 } from "uuid";
-import * as fabric from 'fabric';
-
+import { fabric } from "fabric";
 
 import {
   CanvasMouseDown,
@@ -34,15 +32,15 @@ export const initializeFabric = ({
   }
 
   // create fabric canvas
-  
-  if(fabricRef.current){
-    return fabricRef.current
+
+  if (fabricRef.current) {
+    return fabricRef.current;
   }
 
-  const canvas = new fabric.Canvas(canvasRef.current,{
+  const canvas = new fabric.Canvas(canvasRef.current, {
     width: canvasElement.clientWidth,
-    height: canvasElement.clientHeight
-  })
+    height: canvasElement.clientHeight,
+  });
   // const canvas = new fabric.Canvas(canvasRef.current, {
   //   width: canvasElement.clientWidth,
   //   height: canvasElement.clientHeight,
@@ -76,14 +74,18 @@ export const handleCanvasMouseDown = ({
 
   if (
     target &&
-    (target.type === selectedShapeRef.current || target.type === "activeSelection")
+    (target.type === selectedShapeRef.current ||
+      target.type === "activeSelection")
   ) {
     isDrawing.current = false;
     canvas.setActiveObject(target);
     target.setCoords();
   } else {
     isDrawing.current = true;
-    shapeRef.current = createSpecificShape(selectedShapeRef.current, pointer as any);
+    shapeRef.current = createSpecificShape(
+      selectedShapeRef.current,
+      pointer as any
+    );
 
     if (shapeRef.current) {
       canvas.add(shapeRef.current);
@@ -104,6 +106,8 @@ export const handleCanvaseMouseMove = ({
 
   const pointer = canvas.getPointer(options.e);
   canvas.isDrawingMode = false;
+
+  if (!shapeRef.current) return;
 
   switch (selectedShapeRef?.current) {
     case "rectangle":
@@ -284,21 +288,29 @@ export const handleCanvasObjectScaling = ({
 };
 
 // Render objects on canvas
+
 export const renderCanvas = ({
   fabricRef,
   canvasObjects,
   activeObjectRef,
 }: RenderCanvas) => {
+  if (!canvasObjects) {
+    console.error("canvasObjects is null");
+    return;
+  }
+
   fabricRef.current?.clear();
 
-  Array.from(canvasObjects, ([objectId, objectData]) => {
+  Array.from(canvasObjects.entries(), ([objectId, objectData]) => {
     fabric.util.enlivenObjects(
-      [objectData],
+      [objectData], // Serialized object data
       (enlivenedObjects: fabric.Object[]) => {
         enlivenedObjects.forEach((enlivenedObj) => {
+          // Check if the objectId matches the activeObject and set it accordingly
           if (activeObjectRef.current?.objectId === objectId) {
             fabricRef.current?.setActiveObject(enlivenedObj);
           }
+          // Add the enlivened object to the canvas
           fabricRef.current?.add(enlivenedObj);
         });
       },

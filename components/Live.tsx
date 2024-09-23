@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useCallback, useEffect, useState } from "react";
 import LiveCursors from "./cursor/LiveCursors";
@@ -25,7 +25,7 @@ const Live = ({canvasRef}: Props) => {
 
   const [reaction, setReaction] = useState<Reaction[]>([]);
 
-  const broacast = useBroadcastEvent();
+  const broadcast = useBroadcastEvent();
 
   useInterval(()=>{
     setReaction((reaction)=>reaction.filter((r)=>{
@@ -49,7 +49,7 @@ const Live = ({canvasRef}: Props) => {
         ])
       );
 
-      broacast({
+      broadcast({
         x: cursor.x,
         y: cursor.y,
         value: cursorState.reaction
