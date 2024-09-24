@@ -6,20 +6,21 @@ const nextConfig = {
       bufferutil: "commonjs bufferutil",
       canvas: "commonjs canvas",
     });
-    return config
+    // config.infrastructureLogging = { debug: /PackFileCache/ };
+    return config;
   },
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "liveblocks.io",
-        pathname: "/avatars/**", // This allows all images from this specific path.
+        port: "",
       },
     ],
   },
-  typescript:{
+  typescript: {
     ignoreBuildErrors: true,
-  }
+  },
 };
 
 export default nextConfig;
