@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config)=>({
+    "utf-8-validate":"commonjs utf-8-validate",
+    "bufferutil":"commonjs bufferutil",
+    canvas : "commonjs canvas"
+  }),
   images: {
     remotePatterns: [
       {

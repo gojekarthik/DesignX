@@ -216,12 +216,15 @@ export default function Page() {
         imageInputRef={imageInputRef}
         handleImageUpload={(e) => {
           e.stopPropagation();
-          handleImageUpload({
-            file: e.target.files[0],
-            canvas: fabricRef as any,
-            shapeRef,
-            syncShapeInStorage,
-          });
+          if (e.target && e.target.files && e.target.files.length > 0) {
+            handleImageUpload({
+              file: e.target.files[0],
+              canvas: fabricRef as any,
+              shapeRef,
+              syncShapeInStorage,
+            });
+          }
+          
         }}
       />
       <section className="flex h-full flex-row">
