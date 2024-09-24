@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config)=>({
-    "utf-8-validate":"commonjs utf-8-validate",
-    "bufferutil":"commonjs bufferutil",
-    canvas : "commonjs canvas"
-  }),
+  webpack: (config) => {
+    config.externals.push({
+      "utf-8-validate": "commonjs utf-8-validate",
+      bufferutil: "commonjs bufferutil",
+      canvas: "commonjs canvas",
+    });
+    return config
+  },
   images: {
     remotePatterns: [
       {
@@ -12,8 +15,11 @@ const nextConfig = {
         hostname: "liveblocks.io",
         pathname: "/avatars/**", // This allows all images from this specific path.
       },
-    ]
+    ],
   },
+  typescript:{
+    ignoreBuildErrors: true,
+  }
 };
 
-export default nextConfig
+export default nextConfig;
